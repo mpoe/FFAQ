@@ -1,0 +1,12 @@
+{
+  "images": ["img/sprites/HeroTopDownSprite.png"],
+  "frames": {"width":60, "height":60, "regX": 0, "regY":0},
+  "animations": {
+    "idle": [0,3],
+    "up": [4,7],
+    "right":[8,11],
+    "down":[12,15],
+    "left":[16,19],
+    "notMoving":[0]
+  }
+}
