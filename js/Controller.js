@@ -9,33 +9,40 @@ var Controller = {
         window.onkeydown=false;
     },
     keyDown:function(e) {
-        console.log(e.keyCode);
         switch (e.keyCode) {
             //UP
-            case 38 || 87:
-                console.log("no w?")
+            case 38:
+            case 87:
                 Controller.mapMove(-1,0);
                 break;
             //RIGHT
-            case 39 || 68:
+            case 39:
+            case 68:
                 Controller.mapMove(0,1);
                 break;
             //DOWN
-            case 40 || 83:
-                console.log("down")
+            case 40:
+            case 83:
                 Controller.mapMove(1,0);
                 break;
             //LEFT
-            case 37 || 65:
+            case 37:
+            case 65:
                 Controller.mapMove(0,-1);
+                break;
+            // P
+            case 80:
+                if(PopUp.playerMenuContainer.visible){
+                    Game.stage.removeChild(PopUp.playerMenuContainer)
+                } else {
+                    PopUp.playerMenu()
+                }
+                PopUp.playerMenuContainer.visible=!PopUp.playerMenuContainer.visible
                 break;
         }
     },
     mapMove:function(row,col){
-        console.log(Stage.hero.row);
-        console.log(row);
         var newHeroRow = Stage.hero.row+row;
-        console.log(newHeroRow)
         var newHeroCol = Stage.hero.col+col;
         
         if(col<0){
@@ -50,10 +57,11 @@ var Controller = {
         }
         
         if(Controller.isPassable(newHeroRow,newHeroCol)){
-            console.log("Test")
-            createjs.Tween.get(Stage.hero).to({
-                x:newHeroCol*Game.blockSize,
-                y:newHeroRow*Game.blockSize},300)
+            createjs.Tween.get(Stage.hero).to(
+                {
+                    x:newHeroCol*Game.blockSize,
+                    y:newHeroRow*Game.blockSize
+                },300)
 
             //Stage.hero.x = newHeroCol*Game.blockSize;
             //Stage.hero.y = newHeroRow*Game.blockSize;
@@ -62,26 +70,22 @@ var Controller = {
         }
     },
     isPassable:function(r,c){
-        console.log(Stage.grid[r][c].type)
         switch(Stage.grid[r][c].type){
             case 0:
-                console.log("floor")
                 return true;
                 break;
             case 1:
-                console.log("Grass")
                 var r = Game.getRandomInt(1,4);
                 if(r===1){
+                    Stage.mapmusic.stop()
                     Stage.createCombat();
                 }
                 return true;
                 break;
             case 2:
-                console.log("wall")
                 return false;
                 break;
             default:
-                console.log("default")
                 return true;
         }
     }
